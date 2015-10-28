@@ -117,4 +117,10 @@ public interface SwipeListViewListener {
      */
     void onLastListItem();
 
+    /**
+     * is item of list swipeable
+     * @param position of the view in the list
+     * @return
+     */
+    boolean isSwipeable(int position);
 }

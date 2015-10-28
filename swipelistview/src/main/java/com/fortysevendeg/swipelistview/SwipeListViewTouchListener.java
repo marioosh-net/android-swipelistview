@@ -132,6 +132,10 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         this.parentView = parentView;
     }
 
+    boolean isSwipeable(int position) {
+        return true;
+    }
+
     /**
      * Sets current item's front view
      *
@@ -151,7 +155,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             public boolean onLongClick(View v) {
                 if (swipeOpenOnLongPress) {
                     if (downPosition >= 0) {
-                        openAnimate(childPosition);
+                        if (isSwipeable(downPosition)) {
+                            openAnimate(childPosition);
+                        }
                     }
                 } else {
                     swapChoiceState(childPosition);
@@ -874,7 +880,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                     swipeMode = changeSwipeMode;
                 }
 
-                if (swipeMode == SwipeListView.SWIPE_MODE_NONE) {
+                if (swipeMode == SwipeListView.SWIPE_MODE_NONE || !isSwipeable(downPosition)) {
                     deltaMode = 0;
                 } else if (swipeMode != SwipeListView.SWIPE_MODE_BOTH) {
                     if (opened.get(downPosition)) {

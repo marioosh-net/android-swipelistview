@@ -215,7 +215,15 @@ public class SwipeListView extends ListView {
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         touchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
-        touchListener = new SwipeListViewTouchListener(this, swipeFrontView, swipeBackView);
+        touchListener = new SwipeListViewTouchListener(this, swipeFrontView, swipeBackView) {
+            @Override
+            boolean isSwipeable(int position) {
+                if(swipeListViewListener!=null) {
+                    return swipeListViewListener.isSwipeable(position);
+                }
+                return super.isSwipeable(position);
+            }
+        };
         if (swipeAnimationTime > 0) {
             touchListener.setAnimationTime(swipeAnimationTime);
         }
